@@ -1,0 +1,33 @@
+{
+  "name": "apex-practices-services",
+  "version": "1.0.0",
+  "description": "Services for all things related to the practices",
+  "main": "app.js",
+  "jest":{
+    "testEnvironment":"node"
+  },
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Alex-Apex/apex-practices-services.git"
+  },
+  "keywords": [
+    "practices",
+    "CS"
+  ],
+  "author": "Alex Gomez",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Alex-Apex/apex-practices-services/issues"
+  },
+  "homepage": "https://github.com/Alex-Apex/apex-practices-services#readme",
+  "dependencies": {
+    "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "jest": "^29.5.0",
+    "supertest": "^6.3.3"
+  }
+}
