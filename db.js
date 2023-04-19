@@ -1,14 +1,16 @@
+require('dotenv').config();
 const sql = require('mssql');
 
-// TODO Change this so credentials information is taken from the environment variables
 const config = {
-  user: 'your-username',
-  password: 'your-password',
-  server: 'your-server',
-  database: 'your-database',
-  options: {
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  server: process.env.DB_HOST,
+  database: process.env.DB_NAME,
+  port: parseInt(process.env.DB_PORT,10),
+  // You can put more options here if needed
+  /*options: {
     encrypt: true,
-  },
+  },*/
 };
 
 const poolPromise = new sql.ConnectionPool(config)
