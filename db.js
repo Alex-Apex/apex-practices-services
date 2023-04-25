@@ -20,7 +20,6 @@ const config = {
 
 const appConnectionPoolPromise = new sql.ConnectionPool(config);
 
-
 module.exports = {
   sql,
   appConnectionPoolPromise,

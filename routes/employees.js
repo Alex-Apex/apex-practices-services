@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { fetchEmployees } = require('../services/employeeService');
+const { fetchEmployees, insertEmployee } = require('../services/employeeService');
 
 /**
  * Retrieves all employees
@@ -17,9 +17,19 @@ const getEmployees = async (req, res) => {
     }
 };
 
+const postEmployee = async (req, res) => {
+    try{             
+        const newEmployee = await insertEmployee(req.body);
+        res.status(201).json(newEmployee);
+    } catch(insertEmployeeException) {
+        console.error(insertEmployeeException);
+        res.status(500).json({message:'something happened while trying to insert a new employee'});
+    }
+};
+
 
 router.get('/', (req, res) => getEmployees(req, res));
-router.post('/', (req, res) => { /*...*/ });
+router.post('/', (req, res) => postEmployee(req, res));
 router.get('/:id', (req, res) => { /*...*/ });
 router.put('/:id', (req, res) => { /*...*/ });
 router.delete('/:id', (req, res) => { /*...*/ });

@@ -1,0 +1,3 @@
+const SELECT_ALL_EMPLOYEES = `SELECT * FROM Employees`;
+
+export default SELECT_ALL_EMPLOYEES;
