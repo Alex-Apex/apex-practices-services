@@ -3,6 +3,14 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true })); 
 
+const cors = require('cors');
+app.use(
+    cors({
+      origin: 'http://localhost:3000',
+    })
+  );
+  
+
 const employeesRouter = require('./routes/employees');
 app.use('/employees', employeesRouter);
 

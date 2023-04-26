@@ -1,4 +1,5 @@
 const sql = require('mssql');
+const queries = require('../resources/queries');
 const { appConnectionPoolPromise } = require('../db');
 let pool;
 /**
@@ -7,7 +8,7 @@ let pool;
 async function fetchEmployees() {
   try {
     pool = await appConnectionPoolPromise.connect();
-    let result = await pool.request().query('SELECT * FROM Employees'); //TODO Move all queries to a resources file
+    let result = await pool.request().query(queries.GET_ALL_EMPLOYEES);
     return result.recordset;
   } catch (error) {
     console.error('fetchEmployees Exception:', error);

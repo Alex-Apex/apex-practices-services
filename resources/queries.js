@@ -1,3 +1,6 @@
-const SELECT_ALL_EMPLOYEES = `SELECT * FROM Employees`;
+const queries = {
+    GET_ALL_EMPLOYEES: `SELECT * FROM Employees`,
+    // Add more queries here 
+};
 
-export default SELECT_ALL_EMPLOYEES;
+module.exports = queries;
