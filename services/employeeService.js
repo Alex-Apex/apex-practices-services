@@ -18,7 +18,23 @@ async function fetchEmployees() {
   }
 }
 
-//* --------
+/**
+ * Gets all employees who are currently on bench
+ * @return {Array} promise for benched employees
+ */
+async function fetchBenchReport() {
+  try {
+    pool = await appConnectionPoolPromise.connect();
+    const result = await pool.request().query(queries.GET_BENCH_REPORT);
+    return result.recordset;
+  } catch (exception) {
+    console.error('Error while fetching benched employees: ', exception);
+    throw exception;
+  } finally {
+    await pool.close();
+  }
+}
+
 /**
  * Inserts a new employee into the database.
  * @param {object} employee - The employee object containing
@@ -48,5 +64,6 @@ async function insertEmployee(employee) {
 
 module.exports = {
   fetchEmployees,
+  fetchBenchReport,
   insertEmployee,
 };

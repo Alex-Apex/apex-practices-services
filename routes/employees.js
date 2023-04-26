@@ -1,7 +1,11 @@
 const express = require('express');
 // eslint-disable-next-line new-cap
 const router = express.Router();
-const {fetchEmployees, insertEmployee} = require('../services/employeeService');
+const {
+  fetchEmployees,
+  fetchBenchReport,
+  insertEmployee,
+} = require('../services/employeeService');
 
 /**
  * Retrieves all employees
@@ -20,6 +24,21 @@ const getEmployees = async (req, res) => {
     res.status(500).json({message: 'Error while retrieving employees'});
   }
 };
+/**
+ * Fetches the benched resources from db
+ * @param {object} req -request object
+ * @param {object} res - result object
+ */
+const getBenchReport = async (req, res) => {
+  try {
+    const benchedEmployees = await fetchBenchReport();
+    res.status(200).json(benchedEmployees);
+  } catch (exception) {
+    console.error(exception);
+    // TODO: Please implement better exception handling
+    res.status(500).json({message: 'Failed while retrieving bench report'});
+  }
+};
 
 const postEmployee = async (req, res) => {
   try {
@@ -34,6 +53,7 @@ const postEmployee = async (req, res) => {
 
 router.get('/', (req, res) => getEmployees(req, res));
 router.post('/', (req, res) => postEmployee(req, res));
+router.get('/bench', (req, res) => getBenchReport(req, res));
 router.get('/:id', (req, res) => {/* ...*/});
 router.put('/:id', (req, res) => {/* ...*/});
 router.delete('/:id', (req, res) => {/* ...*/});
