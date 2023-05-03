@@ -54,6 +54,7 @@ const postEmployee = async (req, res) => {
 router.get('/', (req, res) => getEmployees(req, res));
 router.post('/', (req, res) => postEmployee(req, res));
 router.get('/bench', (req, res) => getBenchReport(req, res));
+// TODO: add a new route to put and update the benched employees directly from excel
 router.get('/:id', (req, res) => {/* ...*/});
 router.put('/:id', (req, res) => {/* ...*/});
 router.delete('/:id', (req, res) => {/* ...*/});

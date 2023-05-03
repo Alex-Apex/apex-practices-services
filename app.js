@@ -15,6 +15,10 @@ const employeesRouter = require('./routes/employees');
 app.use('/employees', employeesRouter);
 
 
+const myToolsRouter = require('./routes/tools');
+app.use('/tools', myToolsRouter);
+
+
 const PORT = process.env.PORT || 3001;
 const server = app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
