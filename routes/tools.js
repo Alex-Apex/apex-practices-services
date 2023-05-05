@@ -8,16 +8,17 @@ const {
 
 const getXLBenchReport = async(req, res) => {
   try{
-    let xlReport = await getLocalBenchReport(req.body);
+    const pathToXLData = req.query.path;
+    let xlReport = await getLocalBenchReport(pathToXLData);
     res.status(201).json(xlReport);
   } catch(exception) {
     console.error(exception);
     // TODO: Please implement better exception handling
-    res.status(500).json({message: 'Failed while retrieving bench report'});
+    res.status(500).json({message: 'Failed while Reading the XL Spreadsheet'});
   }
 };
 
-router.get('/benchxl',(re, res) => getXLBenchReport(req, res));
+router.get('/benchxl',(req, res) => getXLBenchReport(req, res));
 /*
 router.get('/', (req, res) => getEmployees(req, res));
 router.post('/', (req, res) => postEmployee(req, res));
