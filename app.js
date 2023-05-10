@@ -10,13 +10,17 @@ app.use(
     }),
 );
 
-
 const employeesRouter = require('./routes/employees');
 app.use('/employees', employeesRouter);
 
-
 const myToolsRouter = require('./routes/tools');
 app.use('/tools', myToolsRouter);
+
+const skillsRouter = require('./routes/skills');
+app.use('/skills', skillsRouter);
+
+const projectsRouter = require('./routes/projects');
+app.use('/projects',projectsRouter);
 
 
 const PORT = process.env.PORT || 3001;
