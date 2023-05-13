@@ -5,10 +5,10 @@ let pool;
 /**
  * Gets the employees from the db
  */
-async function fetchEmployees() {
+async function fetchEmployees(onlyActive) {
   try {
     pool = await appConnectionPoolPromise.connect();
-    const result = await pool.request().query(queries.GET_ALL_EMPLOYEES);
+    const result = await pool.request().query(onlyActive? queries.GET_ALL_ACTIVE_EMPLOYEES: queries.GET_ALL_EMPLOYEES);
     return result.recordset;
   } catch (error) {
     console.error('fetchEmployees Exception:', error);

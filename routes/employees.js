@@ -16,7 +16,7 @@ const {
 const getEmployees = async (req, res) => {
   try {
     // Fetch the list of employees from db
-    const employees = await fetchEmployees();
+    const employees = await fetchEmployees(true);
     res.status(200).json(employees);
   } catch (error) {
     console.error(error);

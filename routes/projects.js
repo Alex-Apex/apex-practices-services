@@ -36,4 +36,4 @@ const postProject = async (req, res) => {
 
 router.get('/', (req, res) => getAllProjects(req, res));
 router.post('/', (req, res) => postProject(req, res));
-module.exports(router);
+module.exports = router;
