@@ -62,8 +62,31 @@ async function insertEmployee(employee) {
   }
 }
 
+/**
+ * Inserts the new bench event into the db
+ * @param {*} benchEvent 
+ */
+async function insertBenchEvent (benchEvent) {
+  try {
+    const pool = await appConnectionPoolPromise.connect();
+    const request = pool.request();
+    
+    request
+        .input('EmployeeID', sql.Int, benchEvent.employeeId)
+        .input('BenchStatusModeName', sql.NVarChar, benchEvent.statusModeName)        
+        .input('Notes', sql.Text, benchEvent.notes);
+
+    const result = await request.execute('InsertBenchManagementEvent');
+    return result.recordset[0];
+  } catch (error) {
+    console.error('Error inserting Bench Event:', error);
+    throw error;
+  }
+};
+
 module.exports = {
   fetchEmployees,
   fetchBenchReport,
   insertEmployee,
+  insertBenchEvent,
 };

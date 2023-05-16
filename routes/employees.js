@@ -5,6 +5,7 @@ const {
   fetchEmployees,
   fetchBenchReport,
   insertEmployee,
+  insertBenchEvent,
 } = require('../services/employeeService');
 
 /**
@@ -50,11 +51,28 @@ const postEmployee = async (req, res) => {
   }
 };
 
+/**
+ * Inserts a new bench event into the db.
+ * @param {*} req 
+ * @param {*} res 
+ */
+const postEmployeeBenchEvent = async (req, res) => {
+  try {
+    const newEvent = await insertBenchEvent(req.body);
+    res.status(201).json(newEvent);
+  } catch(exception) {
+    console.error('Something went wrong while trying to insert a new bench event', exception);
+    res.status(500).json({message:'Failed to insert bench event'});
+  }
+};
+
 
 router.get('/', (req, res) => getEmployees(req, res));
 router.post('/', (req, res) => postEmployee(req, res));
 router.get('/bench', (req, res) => getBenchReport(req, res));
-// TODO: add a new route to put and update the benched employees directly from excel
+//router.post('/bench', (req, res) => loadBenchReport(req, res));
+router.post('/bench/events', (req, res) => postEmployeeBenchEvent(req, res));
+
 router.get('/:id', (req, res) => {/* ...*/});
 router.put('/:id', (req, res) => {/* ...*/});
 router.delete('/:id', (req, res) => {/* ...*/});
