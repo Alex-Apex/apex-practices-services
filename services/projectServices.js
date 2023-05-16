@@ -29,9 +29,10 @@ async function createProject(project) {
     const pool = await appConnectionPoolPromise.connect();
     const request = pool.request();
     request
-      .input('ProjectName', sql.NVarChar, project.projectName)
-      .input('ProjectDescription', sql.Text, project.projectDescription);
-
+      .input('ProjectName', sql.NVarChar(sql.MAX), project.projectName)
+      .input('ProjectDescription', sql.NVarChar(sql.MAX), project.projectDescription);
+    
+    console.log(`Name is: ${project.projectName}, description is: ${project.projectDescription}`);
     const result = await request.execute('InsertProject');
     return result.recordset[0];
   } catch (error) {
