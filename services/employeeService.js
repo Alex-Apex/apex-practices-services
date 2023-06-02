@@ -36,6 +36,40 @@ async function fetchBenchReport() {
 }
 
 /**
+ * 
+ * @returns 
+ */
+async function fetchFridaysChampions() {
+  try {
+    pool = await appConnectionPoolPromise.connect();
+    const result = await pool.request().query(queries.GET_FRIDAY_CHAMPIONS_LEADERBOARD);
+    return result.recordset;
+  } catch(exception) {
+    console.error('Error while trying to get the Champions Friday Roster:', exception);
+    throw exception;
+  } finally {
+    await pool.close();
+  }
+}
+
+
+/**
+ * 
+ */
+async function fetchPerformanceEventCatalog() {
+  try {
+    pool = await appConnectionPoolPromise.connect();
+    const result = await pool.request().query(queries.GET_EMPLOYEE_MANAGEMENT_EVENTS);
+    return result.recordset;
+  } catch(exception) {
+    console.log('Failed to retrieve the performance events catalog from DB', exception);
+    throw exception;
+  }finally {
+    await pool.close();
+  }
+}
+
+/**
  * Inserts a new employee into the database.
  * @param {object} employee - The employee object containing
  * details to be inserted.
@@ -84,9 +118,37 @@ async function insertBenchEvent (benchEvent) {
   }
 };
 
+/**
+ * Receives a Performance event for a particular employee and 
+ * inserts it in the db
+ * @param {*} EmployeePerformanceEvent 
+ */
+async function insertEmployeePerformanceEvent(event) {
+  try{
+    const pool = await appConnectionPoolPromise.connect();
+    const request = pool.request();
+    request
+          .input('EmployeeId', sql.Int, event.employeeId)
+          .input('PerformanceEventTypeId', sql.Int, event.performanceEventTypeId)
+          .input('Notes', sql.VarChar(sql.MAX), event.notes);
+    if(event.dateOccurred !== null && event.dateOccurred !== '') {
+      console.log('Event Date Occurred:',event.dateOccurred);
+      request.input('DateOccurred',sql.Date, event.dateOccurred);
+    }
+    const result = await request.execute('InsertEmployeePerformanceEvent');
+    return result.recordset[0];
+  } catch(exception) {
+    console.error('Error while trying to insert performance evente', exception);
+    throw error;
+  }
+}
+
 module.exports = {
   fetchEmployees,
   fetchBenchReport,
+  fetchFridaysChampions,
+  fetchPerformanceEventCatalog,
   insertEmployee,
   insertBenchEvent,
+  insertEmployeePerformanceEvent,
 };
