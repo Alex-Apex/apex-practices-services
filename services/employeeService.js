@@ -96,6 +96,21 @@ async function insertEmployee(employee) {
   }
 }
 
+async function removeEmployee (employee) {
+  try {
+    const pool = await appConnectionPoolPromise.connect();
+    const request = pool.request();
+    request.input('employeeId', sql.BigInt, employeeId)
+    .input('CompanyEndDate', sql.DateTime,employee.lastDay);
+    const result = await request.execute('DeleteEmployee');
+    return result;
+
+  } catch (exception){
+    console.error('Failed to delete employee', exception);
+    throw exception;
+  }
+}
+
 /**
  * Inserts the new bench event into the db
  * @param {*} benchEvent 
@@ -141,7 +156,7 @@ async function insertEmployeePerformanceEvent(event) {
     console.error('Error while trying to insert performance evente', exception);
     throw error;
   }
-}
+};
 
 module.exports = {
   fetchEmployees,
@@ -151,4 +166,5 @@ module.exports = {
   insertEmployee,
   insertBenchEvent,
   insertEmployeePerformanceEvent,
+  removeEmployee,
 };

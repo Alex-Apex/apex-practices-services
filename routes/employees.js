@@ -3,6 +3,7 @@ const express = require('express');
 const router = express.Router();
 const {
   fetchEmployees,
+  removeEmployee,
   fetchBenchReport,
   fetchFridaysChampions,
   fetchPerformanceEventCatalog,
@@ -41,6 +42,21 @@ const getBenchReport = async (req, res) => {
     console.error(exception);
     // TODO: Please implement better exception handling
     res.status(500).json({message: 'Failed while retrieving bench report'});
+  }
+};
+
+/**
+ * 
+ * @param {*} req 
+ * @param {*} res 
+ */
+const deleteEmployee = async (req, res) => {
+  try{
+    const terminatedEmployee = await removeEmployee(req);
+    res.status(200).json(terminatedEmployee);
+  } catch(exception) {
+    console.error('failed to delete employee',exception);
+    res.status(500).json({message: 'Failed while trying to delete employee'});
   }
 };
 
@@ -119,6 +135,7 @@ const postEmployeePerformanceManagementEvent = async(req, res) => {
 router.get('/', (req, res) => getEmployees(req, res));
 router.post('/', (req, res) => postEmployee(req, res));
 router.get('/bench', (req, res) => getBenchReport(req, res));
+router.delete('/:id', (req, res) => deleteEmployee(req, res));
 //router.post('/bench', (req, res) => loadBenchReport(req, res));
 router.post('/bench/events', (req, res) => postEmployeeBenchEvent(req, res));
 router.get('/fridaychampions', (req, res) => getChampionsRoster(req, res));
@@ -126,6 +143,5 @@ router.get('/performance/events', (req, res) => getEmployeesPerformanceEventsCat
 router.post('/performance/events', (req, res) => postEmployeePerformanceManagementEvent(req, res));
 router.get('/:id', (req, res) => {/* ...*/});
 router.put('/:id', (req, res) => {/* ...*/});
-router.delete('/:id', (req, res) => {/* ...*/});
 
 module.exports = router;
